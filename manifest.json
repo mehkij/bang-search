@@ -1,0 +1,9 @@
+{
+  "name": "Bang Search",
+  "description": "Use bang syntax to query a search on a specific website!",
+  "version": "1.0.0",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "index.html"
+  }
+}
