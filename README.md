@@ -1,54 +1,33 @@
-# React + TypeScript + Vite
+# !Bang Search
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A Chrome extension that enables a better way to search, inspired by DuckDuckGo's "Bangs".
 
-Currently, two official plugins are available:
+## Installation
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+> [!IMPORTANT]
+> You must have NPM installed, along with its requirements. Visit the [NPM docs](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) for details on how to set it up.
 
-## Expanding the ESLint configuration
+To run locally, clone this repo and build the distributable folder in the project directory:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```bash
+npm run build
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+To install the extension in Chrome, follow these steps:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+1. Navigate to `chrome://extensions` in the search bar.
+2. Turn on Developer Mode by clicking on the switch in the top right.
+3. Click on `Load Unpacked` in the top left, and navigate to the project directory.
+4. Select the `dist` folder, and you're good to go!
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+## Usage
+
+To use the extension, you must first add a URL and Keyword pair. Open the extension, and click on the gear in the top right of the popup. This will bring you to the settings page, where you can add keywords and URL pairs.
+
+> [!WARNING]
+> In order to set a keyword, it **must** be prepended with a bang (!). For example: !example. !ex, !e, etc.
+
+To activate the extension, click on Chrome's search bar, and type `!`. Pressing tab afterwards will activate the extension. To use it, type a keyword that you've set, and then begin typing your search query. For example: `!example cats and dogs`
+
+> [!WARNING]
+> Entering a search without a keyword or a bang that has not been set will result in the search defaulting to a Google search. Be sure to double-check your set keywords and make sure you prepend it with a bang!
