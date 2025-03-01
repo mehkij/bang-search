@@ -10,6 +10,7 @@ export default defineConfig({
       input: {
         main: "index.html",
         omnibox: "src/omnibox.ts",
+        settings: "src/pages/Settings/settings.html",
       },
       output: {
         entryFileNames: "[name].js",
