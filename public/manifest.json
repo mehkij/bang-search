@@ -1,6 +1,6 @@
 {
   "name": "!Bang Search",
-  "description": "Use bang syntax to query a search on a specific website!",
+  "description": "Use DuckDuckGo's bang syntax to search on any website you want!",
   "version": "1.0.0",
   "manifest_version": 3,
   "action": {
@@ -11,5 +11,6 @@
     "service_worker": "omnibox.js"
   },
   "permissions": ["storage", "tabs"],
-  "options_page": "src/pages/Settings/settings.html"
+  "options_page": "src/pages/Settings/settings.html",
+  "author": "kibizstuff@gmail.com"
 }
