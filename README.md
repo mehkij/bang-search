@@ -27,7 +27,16 @@ To use the extension, you must first add a URL and Keyword pair. Open the extens
 > [!WARNING]
 > In order to set a keyword, it **must** be prepended with a bang (!). For example: !example. !ex, !e, etc.
 
-To activate the extension, click on Chrome's search bar, and type `!`. Pressing tab afterwards will activate the extension. To use it, type a keyword that you've set, and then begin typing your search query. For example: `!example cats and dogs`
+To activate the extension, click on Chrome's search bar, and type `!`. Pressing tab or space afterwards will activate the extension. To use it, type a keyword that you've set, and then begin typing your search query. For example: `!example cats and dogs`
+
+> [!TIP]
+> I recommend pressing `!` then `space` to activate the extension for a smoother experience.
 
 > [!WARNING]
 > Entering a search without a keyword or a bang that has not been set will result in the search defaulting to a Google search. Be sure to double-check your set keywords and make sure you prepend it with a bang!
+
+### Note
+
+I know the extension feels a bit clunky with having to activate the extension before using it, however Chrome restricts an extension's access to user input into the address bar due to security reasons.
+
+Ideally you would be able to just type the keyword and your query directly into the address bar and it would work out of the box without having to activate the extension beforehand, but Chrome's API simply doesn't allow for this.
