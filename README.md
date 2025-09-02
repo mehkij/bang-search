@@ -10,6 +10,7 @@ A Chrome extension that enables a better way to search, inspired by DuckDuckGo's
 To run locally, clone this repo and build the distributable folder in the project directory:
 
 ```bash
+npm install
 npm run build
 ```
 
