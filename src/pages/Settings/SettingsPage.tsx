@@ -2,6 +2,17 @@ import { useState, useEffect } from "react";
 import { Plus, Trash2, Save, Settings } from "lucide-react";
 import URLBangPair from "../../types/URLBangPair";
 import StorageResult from "../../types/StorageResult";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "../../components/ui/alert-dialog";
 
 function SettingsPage() {
   const [newBang, setNewBang] = useState("");
@@ -9,6 +20,8 @@ function SettingsPage() {
   const [URLBangPairs, setURLBangPairs] = useState<URLBangPair[]>([]);
   const [saveStatus, setSaveStatus] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+
+  const [pendingDeleteId, setPendingDeleteId] = useState<string | null>(null);
 
   useEffect(() => {
     try {
@@ -72,6 +85,7 @@ function SettingsPage() {
 
   function removePair(id: string) {
     setURLBangPairs(URLBangPairs.filter((pair) => pair.id !== id));
+    setPendingDeleteId(null);
   }
 
   function saveSettings() {
@@ -120,7 +134,8 @@ function SettingsPage() {
             <br />
             <p className="text-sm text-blue-700">
               Copy and paste everything to the left (including that section),
-              and add it to the pair. Your URL should look something like this:
+              and add it to the pair. Your URL will usually look something like
+              this:
               <b> "https://example.com/search?q="</b>
             </p>
           </div>
@@ -159,13 +174,42 @@ function SettingsPage() {
                     <span className="text-gray-600">{pair.keyword}</span>
                   </div>
                 </div>
-                <button
-                  onClick={() => removePair(pair.id)}
-                  className="ml-2 p-1 text-red-500 hover:text-red-700 hover:bg-red-100 rounded-full transition-colors cursor-pointer"
-                  aria-label="Remove"
-                >
-                  <Trash2 className="h-5 w-5" />
-                </button>
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <button
+                      onClick={() => setPendingDeleteId(pair.id)}
+                      className="ml-2 p-1 text-red-500 hover:text-red-700 hover:bg-red-100 rounded-full transition-colors cursor-pointer"
+                      aria-label="Remove"
+                    >
+                      <Trash2 className="h-5 w-5" />
+                    </button>
+                  </AlertDialogTrigger>
+                  {pendingDeleteId === pair.id && (
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>Delete Bang Pair?</AlertDialogTitle>
+                        <AlertDialogDescription>
+                          Are you sure you want to delete this bang pair? This
+                          action cannot be undone.
+                        </AlertDialogDescription>
+                      </AlertDialogHeader>
+                      <AlertDialogFooter>
+                        <AlertDialogCancel
+                          onClick={() => setPendingDeleteId(null)}
+                          className="cursor-pointer hover:bg-gray-200"
+                        >
+                          Cancel
+                        </AlertDialogCancel>
+                        <AlertDialogAction
+                          onClick={() => removePair(pair.id)}
+                          className="bg-red-600 hover:bg-red-700 text-white cursor-pointer"
+                        >
+                          Delete
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  )}
+                </AlertDialog>
               </div>
             ))}
 
