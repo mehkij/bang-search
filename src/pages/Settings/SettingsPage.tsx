@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Plus, Trash2, Save, Settings } from "lucide-react";
+import { Plus, Trash2, Save, Settings, Pencil } from "lucide-react";
 import URLBangPair from "../../types/URLBangPair";
 import StorageResult from "../../types/StorageResult";
 import {
@@ -22,6 +22,10 @@ function SettingsPage() {
   const [error, setError] = useState<string | null>(null);
 
   const [pendingDeleteId, setPendingDeleteId] = useState<string | null>(null);
+
+  const [editingPair, setEditingPair] = useState<string | null>(null);
+  const [editUrl, setEditUrl] = useState("");
+  const [editBang, setEditBang] = useState("");
 
   useEffect(() => {
     try {
@@ -81,6 +85,32 @@ function SettingsPage() {
     setNewUrl("");
     setNewBang("");
     setError(null); // Clear any existing error
+  }
+
+  function startEditing(pair: URLBangPair) {
+    setEditingPair(pair.id);
+    setEditBang(pair.keyword);
+    setEditUrl(pair.url);
+  }
+
+  function saveEdit(id: string) {
+    if (!editBang || !editUrl) return;
+
+    if (!editBang.includes("!")) {
+      setError("Bang must begin with an excalmation mark!");
+      return;
+    }
+
+    setURLBangPairs((pairs) =>
+      pairs.map((pair) =>
+        pair.id === id ? { ...pair, url: editUrl, keyword: editBang } : pair
+      )
+    );
+
+    setEditingPair(null);
+    setEditBang("");
+    setEditBang("");
+    setError(null);
   }
 
   function removePair(id: string) {
@@ -182,11 +212,61 @@ function SettingsPage() {
                     <span className="text-gray-600">{pair.keyword}</span>
                   </div>
                 </div>
+
+                {/* Edit Button */}
+                <AlertDialog>
+                  <AlertDialogTrigger asChild>
+                    <button
+                      onClick={() => startEditing(pair)}
+                      className="ml-1 p-1 text-gray-500 hover:text-gray-700 hover:bg-gray-200 rounded-full transition-colors cursor-pointer"
+                      aria-label="edit"
+                    >
+                      <Pencil className="h-5 w-5" />
+                    </button>
+                  </AlertDialogTrigger>
+                  {editingPair === pair.id && (
+                    <AlertDialogContent>
+                      <AlertDialogHeader>
+                        <AlertDialogTitle>
+                          Editing "{pair.keyword}"
+                        </AlertDialogTitle>
+                      </AlertDialogHeader>
+                      <input
+                        type="text"
+                        value={editUrl}
+                        onChange={(e) => setEditUrl(e.target.value)}
+                        className="w-full px-2 py-1 border rounded"
+                      />
+                      <input
+                        type="text"
+                        value={editBang}
+                        onChange={(e) => setEditBang(e.target.value)}
+                        className="w-full px-2 py-1 border rounded"
+                      />
+                      <AlertDialogFooter>
+                        <AlertDialogCancel
+                          onClick={() => setEditingPair(null)}
+                          className="cursor-pointer hover:bg-gray-200"
+                        >
+                          Cancel
+                        </AlertDialogCancel>
+                        <AlertDialogAction
+                          onClick={() => saveEdit(pair.id)}
+                          className="bg-green-600 hover:bg-green-700 text-white cursor-pointer"
+                        >
+                          Save
+                        </AlertDialogAction>
+                      </AlertDialogFooter>
+                    </AlertDialogContent>
+                  )}
+                </AlertDialog>
+
+                {/* Delete Button */}
                 <AlertDialog>
                   <AlertDialogTrigger asChild>
                     <button
                       onClick={() => setPendingDeleteId(pair.id)}
-                      className="ml-2 p-1 text-red-500 hover:text-red-700 hover:bg-red-100 rounded-full transition-colors cursor-pointer"
+                      className="ml-1 p-1 text-red-500 hover:text-red-700 hover:bg-red-100 rounded-full transition-colors cursor-pointer"
                       aria-label="Remove"
                     >
                       <Trash2 className="h-5 w-5" />
