@@ -18,7 +18,14 @@ function querySearch(text: string) {
           chrome.tabs.update({ url: fullURL });
         }
 
-        fullURL = pairs[query[0]].url + query.slice(1).join("+");
+        const searchQuery = query.slice(1).join("+");
+
+        if (pairs[query[0]].url.includes("^")) {
+          fullURL = pairs[query[0]].url.replace("^", searchQuery);
+        } else {
+          fullURL = pairs[query[0]].url + searchQuery;
+        }
+
         console.log("Full URL in try block: ", fullURL);
         chrome.tabs.update({ url: fullURL });
         return;
