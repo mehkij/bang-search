@@ -138,12 +138,20 @@ function SettingsPage() {
               this:
               <b> "https://example.com/search?q="</b>
             </p>
+            <br />
+            <p className="text-sm text-blue-700">
+              Using <b>"^"</b> allows for more control over where your query
+              ends up for websites that don't use the typical "search?q="
+              paradigm! For example, you can do something like this:
+              "https://example.com/search/^/...", which will insert your query
+              where the <b>^</b> is: "https://example.com/search/cats/..."
+            </p>
           </div>
 
           <div className="bg-yellow-50 border-l-4 border-yellow-500 p-4 mb-6">
             <p className="text-sm text-yellow-700">
-              Warning: Your bang keyword must start with "!" Examples:
-              "!example", "!ex", "!e"
+              Your bang keyword must start with "!" Examples: "!example", "!ex",
+              "!e"
             </p>
           </div>
         </div>
